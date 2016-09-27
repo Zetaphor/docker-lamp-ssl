@@ -1,0 +1,23 @@
+db:
+  build: ./docker/mysql
+  ports:
+    - "3306:3306"
+  volumes:
+    - ./docker/mysql/var/mysql:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root_pass
+    - MYSQL_DATABASE=database_name
+    - MYSQL_USER=database_user
+    - MYSQL_PASSWORD=i?7BGf%JKh=bh_*dbL
+
+web:
+  build: ./docker/apache
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - db:db
+  volumes:
+    - ./:/var/www/html
+    - ./docker/apache/var/log/apache2:/var/log/apache2
+
